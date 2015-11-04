@@ -1,0 +1,14 @@
+PODS:
+  - DQLoopBanner (0.1.0)
+
+DEPENDENCIES:
+  - DQLoopBanner (from `../`)
+
+EXTERNAL SOURCES:
+  DQLoopBanner:
+    :path: ../
+
+SPEC CHECKSUMS:
+  DQLoopBanner: 2f043a0ee44daa635bc1197b6198cb9cfd79f50b
+
+COCOAPODS: 0.39.0
