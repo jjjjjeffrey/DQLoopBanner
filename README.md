@@ -1,6 +1,4 @@
-# DQLoopBanner
-<<<<<<< 0c254f2b6a7dfb5e65f7de76341a6809521f6f6c
-=======
+
 
 [![CI Status](http://img.shields.io/travis/zengdaqian/DQLoopBanner.svg?style=flat)](https://travis-ci.org/zengdaqian/DQLoopBanner)
 [![Version](https://img.shields.io/cocoapods/v/DQLoopBanner.svg?style=flat)](http://cocoapods.org/pods/DQLoopBanner)
@@ -19,7 +17,10 @@ DQLoopBanner is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "DQLoopBanner"
+source 'https://github.com/jjjjjeffrey/DQPodSpecs.git'
+platform :ios, '8.0'
+use_frameworks!
+pod 'DQLoopBanner', '~> 1.0.0'
 ```
 
 ## Author
@@ -29,4 +30,3 @@ zengdaqian, 314099323@qq.com
 ## License
 
 DQLoopBanner is available under the MIT license. See the LICENSE file for more info.
->>>>>>> Initial commit
