@@ -18,8 +18,6 @@ public class LoopBannerView: UIView, UIScrollViewDelegate {
         view.delegate = self
         return view
     }()
-    
-    private var banners = [UIView]()
 
     weak public var dataSource: LoopBannerViewDataSource? {
         didSet {
