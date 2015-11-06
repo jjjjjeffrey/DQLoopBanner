@@ -17,7 +17,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         self.bannerView.dataSource = self
+        self.bannerView.pageIndex = 3
         self.pageControl.numberOfPages = 5;
+        self.pageControl.currentPage = self.bannerView.pageIndex
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,6 +48,11 @@ extension ViewController: LoopBannerViewDataSource {
     func loopBannerView(loopBannerView: LoopBannerView, didScrollToIndex index: Int) {
         self.pageControl.currentPage = index
     }
+    
+    func loopBannerView(loopBannerView: LoopBannerView, didTappedBannerForIndex index: Int) {
+        print("点击第\(index+1)页")
+    }
+    
 }
 
 
