@@ -20,7 +20,7 @@ it, simply add the following line to your Podfile:
 source 'https://github.com/jjjjjeffrey/DQPodSpecs.git'
 platform :ios, '8.0'
 use_frameworks!
-pod 'DQLoopBanner', '~> 1.0.0'
+pod 'DQLoopBanner', '~> 1.1.0'
 ```
 
 ## Author
