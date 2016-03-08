@@ -20,6 +20,7 @@ class ViewController: UIViewController {
         self.bannerView.pageIndex = 3
         self.pageControl.numberOfPages = 5;
         self.pageControl.currentPage = self.bannerView.pageIndex
+        self.bannerView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {

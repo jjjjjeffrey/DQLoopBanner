@@ -44,21 +44,7 @@ public class LoopBannerView: UIView {
 
     weak public var dataSource: LoopBannerViewDataSource? {
         didSet {
-            guard let numberOfBanners = dataSource?.numberOfBannersInLoopBannerView(self) else { return }
-            self.scrollView.subviews.forEach { $0.removeFromSuperview() }
-            for index in 0..<numberOfBanners+2 {
-                switch index {
-                case 0:
-                    let bannerView = dataSource!.loopBannerView(self, bannerForIndex: numberOfBanners-1)
-                    self.scrollView.addSubview(bannerView)
-                case numberOfBanners+2-1:
-                    let bannerView = dataSource!.loopBannerView(self, bannerForIndex: 0)
-                    self.scrollView.addSubview(bannerView)
-                default:
-                    let bannerView = dataSource!.loopBannerView(self, bannerForIndex: index-1)
-                    self.scrollView.addSubview(bannerView)
-                }
-            }
+            reloadData()
         }
     }
     
@@ -88,6 +74,25 @@ public class LoopBannerView: UIView {
         self.scrollView.contentSize = CGSizeMake(CGFloat(self.scrollView.subviews.count)*self.bannerWidth, self.bannerHeight)
         self.scrollView.contentOffset.x = self.bannerWidth * CGFloat(self.pageIndex+1)
         self.sendSubviewToBack(self.scrollView)
+    }
+    
+    public func reloadData() {
+        guard let numberOfBanners = dataSource?.numberOfBannersInLoopBannerView(self) else { return }
+        self.scrollView.subviews.forEach { $0.removeFromSuperview() }
+        for index in 0..<numberOfBanners+2 {
+            switch index {
+            case 0:
+                let bannerView = dataSource!.loopBannerView(self, bannerForIndex: numberOfBanners-1)
+                self.scrollView.addSubview(bannerView)
+            case numberOfBanners+2-1:
+                let bannerView = dataSource!.loopBannerView(self, bannerForIndex: 0)
+                self.scrollView.addSubview(bannerView)
+            default:
+                let bannerView = dataSource!.loopBannerView(self, bannerForIndex: index-1)
+                self.scrollView.addSubview(bannerView)
+            }
+        }
+        setNeedsLayout()
     }
 }
 
