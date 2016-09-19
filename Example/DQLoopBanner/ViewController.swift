@@ -32,12 +32,12 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: LoopBannerViewDataSource {
-    func numberOfBannersInLoopBannerView(loopBannerView: LoopBannerView) -> Int {
+    func numberOfBannersInLoopBannerView(_ loopBannerView: LoopBannerView) -> Int {
         return 5
     }
     
-    func loopBannerView(loopBannerView: LoopBannerView, bannerForIndex index: Int) -> UIView {
-        let colors = [UIColor.grayColor(), UIColor.lightGrayColor(), UIColor.redColor(), UIColor.blueColor(), UIColor.purpleColor()]
+    func loopBannerView(_ loopBannerView: LoopBannerView, bannerForIndex index: Int) -> UIView {
+        let colors = [UIColor.gray, UIColor.lightGray, UIColor.red, UIColor.blue, UIColor.purple]
         
         return {
             let view = UIView()
@@ -46,11 +46,11 @@ extension ViewController: LoopBannerViewDataSource {
             }()
     }
     
-    func loopBannerView(loopBannerView: LoopBannerView, didScrollToIndex index: Int) {
+    func loopBannerView(_ loopBannerView: LoopBannerView, didScrollToIndex index: Int) {
         self.pageControl.currentPage = index
     }
     
-    func loopBannerView(loopBannerView: LoopBannerView, didTappedBannerForIndex index: Int) {
+    func loopBannerView(_ loopBannerView: LoopBannerView, didTappedBannerForIndex index: Int) {
         print("点击第\(index+1)页")
     }
     

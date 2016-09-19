@@ -8,41 +8,41 @@
 
 import UIKit
 
-public class LoopBannerView: UIView {
+open class LoopBannerView: UIView {
     
-    public var pageIndex: Int {
+    open var pageIndex: Int {
         didSet {
             self.scrollView.contentOffset.x = self.bannerWidth * CGFloat(self.pageIndex+1)
         }
     }
     
-    private var bannerWidth: CGFloat {
+    fileprivate var bannerWidth: CGFloat {
         get {
-            return CGRectGetWidth(self.frame)
+            return self.frame.width
         }
     }
     
-    private var bannerHeight: CGFloat {
+    fileprivate var bannerHeight: CGFloat {
         get {
-            return CGRectGetHeight(self.frame)
+            return self.frame.height
         }
     }
     
-    lazy private var tapGestureRecognizer: UITapGestureRecognizer = {
-       let tap = UITapGestureRecognizer(target: self, action: Selector("tappedBanner:"))
+    lazy fileprivate var tapGestureRecognizer: UITapGestureRecognizer = {
+       let tap = UITapGestureRecognizer(target: self, action: #selector(LoopBannerView.tappedBanner(_:)))
         return tap
     }()
     
-    lazy private var scrollView: UIScrollView = {
+    lazy fileprivate var scrollView: UIScrollView = {
         let view = UIScrollView()
-        view.pagingEnabled = true
+        view.isPagingEnabled = true
         view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = false
         view.delegate = self
         return view
     }()
 
-    weak public var dataSource: LoopBannerViewDataSource? {
+    weak open var dataSource: LoopBannerViewDataSource? {
         didSet {
             reloadData()
         }
@@ -61,22 +61,22 @@ public class LoopBannerView: UIView {
         self.initSubViews()
     }
     
-    private func initSubViews() {
+    fileprivate func initSubViews() {
         self.addGestureRecognizer(self.tapGestureRecognizer)
         self.addSubview(scrollView)
     }
     
-    override public func layoutSubviews() {
-        self.scrollView.frame = CGRectMake(0, 0, self.bannerWidth, self.bannerHeight);
-        for (index, view) in self.scrollView.subviews.enumerate() {
-            view.frame = CGRectMake(CGFloat(index)*self.bannerWidth, 0, self.bannerWidth, self.bannerHeight)
+    override open func layoutSubviews() {
+        self.scrollView.frame = CGRect(x: 0, y: 0, width: self.bannerWidth, height: self.bannerHeight);
+        for (index, view) in self.scrollView.subviews.enumerated() {
+            view.frame = CGRect(x: CGFloat(index)*self.bannerWidth, y: 0, width: self.bannerWidth, height: self.bannerHeight)
         }
-        self.scrollView.contentSize = CGSizeMake(CGFloat(self.scrollView.subviews.count)*self.bannerWidth, self.bannerHeight)
+        self.scrollView.contentSize = CGSize(width: CGFloat(self.scrollView.subviews.count)*self.bannerWidth, height: self.bannerHeight)
         self.scrollView.contentOffset.x = self.bannerWidth * CGFloat(self.pageIndex+1)
-        self.sendSubviewToBack(self.scrollView)
+        self.sendSubview(toBack: self.scrollView)
     }
     
-    public func reloadData() {
+    open func reloadData() {
         guard let numberOfBanners = dataSource?.numberOfBannersInLoopBannerView(self) else { return }
         self.scrollView.subviews.forEach { $0.removeFromSuperview() }
         for index in 0..<numberOfBanners+2 {
@@ -97,8 +97,8 @@ public class LoopBannerView: UIView {
 }
 
 extension LoopBannerView: UIScrollViewDelegate {
-    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        let width = CGRectGetWidth(self.frame)
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let width = self.frame.width
         if scrollView.contentOffset.x == 0 {
             scrollView.contentOffset.x = CGFloat(scrollView.subviews.count-2)*width
         }
@@ -119,16 +119,16 @@ extension LoopBannerView: UIScrollViewDelegate {
 }
 
 extension LoopBannerView {
-    func tappedBanner(tapGestureRecognizer: UITapGestureRecognizer) {
+    func tappedBanner(_ tapGestureRecognizer: UITapGestureRecognizer) {
         self.dataSource?.loopBannerView?(self, didTappedBannerForIndex: self.pageIndex)
     }
 }
 
 @objc public protocol LoopBannerViewDataSource: NSObjectProtocol {
-    func numberOfBannersInLoopBannerView(loopBannerView: LoopBannerView) -> Int
-    func loopBannerView(loopBannerView: LoopBannerView, bannerForIndex index: Int) -> UIView
-    optional func loopBannerView(loopBannerView: LoopBannerView, didScrollToIndex index: Int)
-    optional func loopBannerView(loopBannerView: LoopBannerView, didTappedBannerForIndex index: Int)
+    func numberOfBannersInLoopBannerView(_ loopBannerView: LoopBannerView) -> Int
+    func loopBannerView(_ loopBannerView: LoopBannerView, bannerForIndex index: Int) -> UIView
+    @objc optional func loopBannerView(_ loopBannerView: LoopBannerView, didScrollToIndex index: Int)
+    @objc optional func loopBannerView(_ loopBannerView: LoopBannerView, didTappedBannerForIndex index: Int)
 }
 
 
